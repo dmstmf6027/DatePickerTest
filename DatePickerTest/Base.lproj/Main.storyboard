@@ -25,7 +25,7 @@
                                     <!--2018-04-11 05:24:48 +0000-->
                                 </date>
                                 <connections>
-                                    <action selector="changeDatePicker:" destination="BYZ-38-t0r" eventType="valueChanged" id="MrJ-DQ-qgf"/>
+                                    <action selector="ChangePick:" destination="BYZ-38-t0r" eventType="valueChanged" id="iyH-aO-bAO"/>
                                 </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="선택시간 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoA-F4-d2b">

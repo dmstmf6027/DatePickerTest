@@ -9,39 +9,64 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let timeSelector : Selector = #selector(ViewController.updateTime)
-    let interval = 1.0
-    var count = 0
-    
-
     @IBOutlet weak var lblCurrentTime: UILabel!
     @IBOutlet weak var lblPickerTime: UILabel!
     
+    var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        Timer.scheduledTimer(timeInterval: interval, target: self, selector: timeSelector, userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {(timer) in self.updateTime()})
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    @IBAction func changeDatePicker(_ sender: Any) {
+    
+    @IBAction func ChangePick(_ sender: UIDatePicker) {
         let datePickerView = sender
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss a EEE"
-        lblPickerTime.text = "선택시간: " + formatter.string(from: (datePickerView as AnyObject).date)
-}
-    @objc func updateTime() {
-        let date = NSDate()
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEE"
-        lblCurrentTime.text = "현재시간: " + formatter.string(from: date as Date)
-        formatter.dateFormat = "hh:mm aaa"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy-MM-dd a HH:mm:ss EEE"
+        lblPickerTime.text = formatter.string(from: datePickerView.date)
     }
+    
+    
+    @objc func updateTime() {
+        let date1 = Date()
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yyyy-MM-dd a HH:mm:ss EEE"
+        let time1 = formatter.string(from: date1)
+        lblCurrentTime.text = time1
+        
+        if lblPickerTime.text == lblCurrentTime.text {
+            view.backgroundColor = UIColor.red
+            let alertController = UIAlertController(title: "알람", message: "지정된시간입니다.", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let DestructiveAction = UIAlertAction(title: "취소", style: UIAlertActionStyle.destructive) { (result : UIAlertAction) -> Void in
+                print("취소")
+                
+            }
+            
+            let okAction = UIAlertAction(title: "확인", style: UIAlertActionStyle.default) { (result : UIAlertAction) -> Void in
+                print("확인")
+                self.view.backgroundColor = UIColor.white
+                
+            }
+            
+            alertController.addAction(DestructiveAction)
+            
+            alertController.addAction(okAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+            
+            
+            
+            
+        }
+        }
+        
+    }
+    
+    
 
-}
